@@ -3,16 +3,45 @@
 services:
   db:
     image: postgres
+    container_name: postgres_db
     restart: always
     # set shared memory limit when using docker compose
     shm_size: 128mb
     volumes:
-      - ./db:/var/lib/postgresql
+      - pgdata:/var/lib/postgresql
+    ports:
+      - "5432:5432"
     environment:
       POSTGRES_PASSWORD: mysecret
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
+  # adminer es una interfaz gráfica para gestionar la base de datos, se debe exponer el puerto a la base de datos. en este caso 5432
   adminer:
     image: adminer
     restart: always
     ports:
-      - 8080:8080
+      - "8080:8080"
+    depends_on:
+      - db
+
+  server:
+    image: backend
+    build:
+      context: .
+      dockerfile: dev.Dockerfile
+    volumes:
+      - ./:/usr/src/app
+      - /usr/src/app/node_modules
+    environment:
+      - DATABASE_URL=postgres://postgres:mysecret@db:5432/postgres
+    container_name: backend
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  pgdata:
