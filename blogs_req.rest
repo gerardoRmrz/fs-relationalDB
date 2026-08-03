@@ -1,3 +1,21 @@
+GET http://localhost:3001/api/blogs
+
+#############
+
+DELETE http://localhost:3001/api/blogs/6
+
+######################################
+POST http://localhost:3001/api/blogs HTTP/1.1
+Content-Type: application/json
+
+{
+    "title": "TDD harms architecture",
+    "author": "Robert C. Martin",
+    "url": "http://blog.cleancoder.com/uncle-bob/2017/03/03/TDD-Harms-Architecture.html"
+}
+
+
+######################################
 POST http://localhost:3001/api/blogs HTTP/1.1
 Content-Type: application/json
 
@@ -33,8 +51,3 @@ Content-Type: application/json
 
 ##############
 
-GET http://localhost:3001/api/blogs
-
-#############
-
-DELETE http://localhost:3001/api/blogs/1
