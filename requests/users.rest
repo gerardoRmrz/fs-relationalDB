@@ -6,7 +6,7 @@ Content-Type: application/json
 
 {
   "name": "Gerardo Ramirez",
-  "username": "grmzrso"
+  "username": "grmzrso@gmail.com"
 }
 
 ################################
@@ -16,7 +16,7 @@ Content-Type: application/json
 
 {
   "name": "Mariano Azuela",
-  "username": "marAz"
+  "username": "marAz@yandex.com"
 }
 
 ################################
@@ -26,7 +26,7 @@ Content-Type: application/json
 
 {
   "name": "William Shakespeare",
-  "username": "willShak"
+  "username": "willShak@gmail.com"
 
 }
 
@@ -37,16 +37,16 @@ Content-Type: application/json
 
 {
   "name": "Akira Kurosawa",
-  "username": "akirKu"
+  "username": "akirKu@outlook.com"
 
 }
 
 ################################
 
-PUT http://localhost:3001/api/users/akirKu HTTP/1.1
+PUT http://localhost:3001/api/users/kirKu%40outlook.com HTTP/1.1
 Content-Type: application/json
 
 {
-  "newUserName": "akrKur"
+  "newUserName": "akrKur@yahoo.com"
 
 }
