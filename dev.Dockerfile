@@ -8,4 +8,4 @@ RUN npm cache clean --force && npm install
 
 COPY . .
 
-CMD [ "node", "index.js" ]
+CMD [ "node", "cli.js" ]
