@@ -28,6 +28,11 @@ const blogFinder = async (req, res, next) => {
 };
 
 router.get("/", async (req, res) => {
+  const where = {};
+
+  if (req.query.search) {
+  }
+
   const blogs = await Blog.findAll({
     attributes: { exclude: ["userId"] },
     include: {
@@ -35,9 +40,12 @@ router.get("/", async (req, res) => {
       attributes: ["name"],
     },
     where: {
-      title: {
-        [Op.substring]: req.query.search ? req.query.search : "",
-      },
+      [Op.or]: [
+        { title: { [Op.substring]: req.query.search ? req.query.search : "" } },
+        {
+          author: { [Op.substring]: req.query.search ? req.query.search : "" },
+        },
+      ],
     },
   });
   res.json(blogs);
