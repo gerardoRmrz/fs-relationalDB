@@ -43,10 +43,39 @@ Content-Type: application/json
 
 ################################
 
-PUT http://localhost:3001/api/users/kirKu%40outlook.com HTTP/1.1
+PUT http://localhost:3001/api/users/akirKu%40outlook.com HTTP/1.1
 Content-Type: application/json
 
 {
   "newUserName": "akrKur@yahoo.com"
 
+}
+##################################
+
+POST http://localhost:3001/api/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "username": "grmzrso@gmail.com",
+  "password": "secret"
+}
+
+##################################
+
+POST http://localhost:3001/api/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "username": "marAz@yandex.com",
+  "password": "secret"
+}
+
+##################################
+
+POST http://localhost:3001/api/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "username": "willShak@gmail.com",
+  "password": "secret"
 }

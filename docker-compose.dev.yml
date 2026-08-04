@@ -40,6 +40,7 @@ services:
       - /usr/src/app/node_modules
     environment:
       - DATABASE_URL=postgres://postgres:mysecret@db:5432/postgres
+      - SECRET=ajsgsdf
     container_name: backend
     depends_on:
       db:
