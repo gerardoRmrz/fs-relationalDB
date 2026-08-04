@@ -3,11 +3,7 @@ const router = require("express").Router();
 const { User, Blog } = require("../models");
 
 router.get("/", async (req, res) => {
-  const users = await User.findAll({
-    include: {
-      model: Blog,
-    },
-  });
+  const users = await User.findAll();
   res.json(users);
 });
 

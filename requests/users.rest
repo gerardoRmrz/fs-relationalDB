@@ -50,6 +50,16 @@ Content-Type: application/json
   "newUserName": "akrKur@yahoo.com"
 
 }
+#####################################
+
+POST http://localhost:3001/api/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "username": "akrKur@yahoo.com",
+ "password": "secret"
+}
+
 ##################################
 
 POST http://localhost:3001/api/login HTTP/1.1
