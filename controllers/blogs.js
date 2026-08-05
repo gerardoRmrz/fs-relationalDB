@@ -2,6 +2,7 @@ const router = require("express").Router();
 const jwt = require("jsonwebtoken");
 const { SECRET } = require("../util/config");
 const { Op } = require("sequelize");
+const { User, Blog } = require("../models");
 
 const tokenExtractor = (req, res, next) => {
   const authorization = req.get("Authorization");
@@ -16,8 +17,6 @@ const tokenExtractor = (req, res, next) => {
   }
   next();
 };
-
-const { User, Blog } = require("../models");
 
 const blogFinder = async (req, res, next) => {
   req.blog = await Blog.findByPk(req.params.id);
@@ -90,7 +89,7 @@ router.delete("/:id", tokenExtractor, async (req, res, next) => {
 router.put("/:id", blogFinder, async (req, res, next) => {
   try {
     const blog = req.blog;
-    blog.likes++;
+    blog.likes = req.body.likes;
     blog.save();
     res.status(200).json(blog);
   } catch (error) {

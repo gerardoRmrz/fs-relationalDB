@@ -1,3 +1,6 @@
+const { SECRET } = require("../util/config");
+const { jwt } = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 const router = require("express").Router();
 
 const { User, Blog } = require("../models");
@@ -15,8 +18,17 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", async (req, res, next) => {
+  const { username, name, password } = req.body;
+
+  const saltRounds = 10;
+  const passwordHash = await bcrypt.hash(password, saltRounds);
+
   try {
-    const user = await User.create(req.body);
+    const user = await User.create({
+      username,
+      name,
+      passwordHash,
+    });
     res.json(user);
   } catch (error) {
     console.log(error);
