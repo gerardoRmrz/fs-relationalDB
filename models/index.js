@@ -4,7 +4,8 @@ const User = require("./user.js");
 User.hasMany(Blog);
 Blog.belongsTo(User);
 
-User.sync({ alter: true })
+// Don't use with syncronizations
+/* User.sync({ alter: true })
   .then(() => {
     return Blog.sync({ alter: true });
   })
@@ -13,7 +14,7 @@ User.sync({ alter: true })
   })
   .catch((error) => {
     console.error("Synchronization error: ", error);
-  });
+  }); */
 
 module.exports = {
   Blog,
