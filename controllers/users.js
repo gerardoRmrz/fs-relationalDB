@@ -29,6 +29,7 @@ router.post("/", async (req, res, next) => {
       name,
       passwordHash,
     });
+
     res.json(user);
   } catch (error) {
     console.log(error);

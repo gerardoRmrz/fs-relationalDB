@@ -7,7 +7,7 @@ Blog.belongsTo(User);
 // Don't use with syncronizations
 /* User.sync({ alter: true, force: true }) // force: true borra y reconstruye todo;
   .then(() => {
-    return Blog.sync({ alter: true });
+    return Blog.sync({ alter: true, force: true });
   })
   .then(() => {
     console.log("The tables have been synchronized");

@@ -26,9 +26,14 @@ Blog.init(
       type: DataTypes.INTEGER,
       defaultValue: 0,
     },
+    year: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
   },
   {
     sequelize,
+    timestamps: true,
     underscored: true,
     createdAt: "created_at",
     updatedAt: "updated_at",
