@@ -23,7 +23,7 @@ const sequelize = new Sequelize(
 const connectToDatabase = async () => {
   try {
     await sequelize.authenticate();
-    await runMigrations();
+    await runMigrations(); // COMENTAR CUANDO SE CREAN LAS BASES DE DATOS
     console.log("connected to the database");
   } catch (err) {
     console.log("failed to connect to the database: ", err);
