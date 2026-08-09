@@ -2,7 +2,7 @@ const blogsList = () => [
   {
     title: "React patterns",
     author: "Michael Chan",
-    user_id: 6,
+    user_id: 1,
     url: "https://reactpatterns.com/",
     created_at: new Date(),
     updated_at: new Date(),
@@ -11,7 +11,7 @@ const blogsList = () => [
   {
     title: "Go To Statement Considered Harmful",
     author: "Edsger W. Dijkstra",
-    user_id: 7,
+    user_id: 2,
     url: "http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html",
     created_at: new Date(),
     updated_at: new Date(),
@@ -20,7 +20,7 @@ const blogsList = () => [
   {
     title: "Canonical string reduction",
     author: "Edsger W. Dijkstra",
-    user_id: 8,
+    user_id: 3,
     url: "http://www.cs.utexas.edu/~EWD/transcriptions/EWD08xx/EWD808.html",
     created_at: new Date(),
     updated_at: new Date(),
@@ -29,7 +29,7 @@ const blogsList = () => [
   {
     title: "First class tests",
     author: "Robert C. Martin",
-    user_id: 9,
+    user_id: 4,
     url: "http://blog.cleancoder.com/uncle-bob/2017/05/05/TestDefinitions.htmll",
     created_at: new Date(),
     updated_at: new Date(),
@@ -38,7 +38,7 @@ const blogsList = () => [
   {
     title: "TDD harms architecture",
     author: "Robert C. Martin",
-    user_id: 10,
+    user_id: 5,
     url: "http://blog.cleancoder.com/uncle-bob/2017/03/03/TDD-Harms-Architecture.html",
     created_at: new Date(),
     updated_at: new Date(),
@@ -47,7 +47,7 @@ const blogsList = () => [
   {
     title: "Type wars",
     author: "Robert C. Martin",
-    user_id: 11,
+    user_id: 6,
     url: "http://blog.cleancoder.com/uncle-bob/2016/05/01/TypeWars.html",
     created_at: new Date(),
     updated_at: new Date(),

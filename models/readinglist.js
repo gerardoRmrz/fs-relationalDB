@@ -14,10 +14,12 @@ ReadingList.init(
     userId: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      references: { model: "users", key: "id" },
     },
     blogId: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      references: { model: "blogs", key: "id" },
     },
     read: {
       type: DataTypes.BOOLEAN,
@@ -30,7 +32,9 @@ ReadingList.init(
     underscored: true,
     createdAt: "created_at",
     updatedAt: "updated_at",
-    modelName: "reading_list",
+    modelName: "readinglist",
+    tableName: "readinglist",
+    freezeTableName: true,
   },
 );
 

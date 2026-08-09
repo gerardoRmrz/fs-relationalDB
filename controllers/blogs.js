@@ -51,8 +51,8 @@ router.get("/", async (req, res) => {
   res.json(blogs);
 });
 
-router.get("/id", blogFinder, async (req, res) => {
-  res.json(req.note);
+router.get("/:id", blogFinder, async (req, res) => {
+  res.json(req.blog);
 });
 
 router.post("/", tokenExtractor, async (req, res, next) => {

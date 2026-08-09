@@ -1,13 +1,27 @@
-const Blog = require("./blog.js");
-const User = require("./user.js");
-const ReadingList = require("./user_readinglist.js");
-const UserReadingList = require("./user_readinglist.js");
+const Blog = require("./blog");
+const User = require("./user");
+const ReadingList = require("./readinglist");
 
 User.hasMany(Blog);
 Blog.belongsTo(User);
 
-User.belongsToMany(ReadingList, { through: UserReadingList });
-ReadingList.belongsToMany(User, { through: UserReadingList });
+User.belongsToMany(Blog, {
+  through: ReadingList,
+  as: "marked_blogs",
+  foreignKey: "userId",
+});
+
+Blog.belongsToMany(User, {
+  through: ReadingList,
+  as: "users_marked",
+  foreignKey: "blogId",
+});
+
+ReadingList.belongsTo(User, { foreignKey: "userId" });
+ReadingList.belongsTo(Blog, { foreignKey: "blogId" });
+User.hasMany(ReadingList, { foreignKey: "userId" });
+Blog.hasMany(ReadingList, { foreignKey: "blogId" });
+
 // COMENTAR  EN ../util/db.js la línea  runMigrations() CUANDO SE CREAN LAS BASES DE DATOS
 // Don't use with syncronizations
 /* User.sync({ alter: true, force: true }) // force: true borra y reconstruye todo;
@@ -24,6 +38,5 @@ ReadingList.belongsToMany(User, { through: UserReadingList });
 module.exports = {
   Blog,
   User,
-  UserReadingList,
   ReadingList,
 };

@@ -3,14 +3,17 @@ const { jwt } = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const router = require("express").Router();
 
-const { User, Blog } = require("../models");
+const { User, Blog, ReadingList } = require("../models");
 
 router.get("/", async (req, res) => {
   const users = await User.findAll({
+    attributes: {
+      exclude: ["passwordHash"],
+    },
     include: {
       model: Blog,
       attributes: {
-        exclude: ["userId"],
+        exclude: ["userId", "created_at", "updated_at"],
       },
     },
   });
@@ -38,7 +41,29 @@ router.post("/", async (req, res, next) => {
 });
 
 router.get("/:id", async (req, res) => {
-  const user = await User.findByPk(req.params.id);
+  const user = await User.findByPk(req.params.id, {
+    attributes: {
+      exclude: ["passwordHash"],
+    },
+    include: [
+      {
+        model: Blog,
+        attributes: {
+          exclude: ["userId", "created_at", "updated_at"],
+        },
+      },
+      {
+        model: Blog,
+        as: "marked_blogs",
+        attributes: {
+          exclude: ["userId", "created_at", "updated_at"],
+        },
+        through: {
+          attributes: [],
+        },
+      },
+    ],
+  });
   if (user) {
     res.json(user);
   } else {
