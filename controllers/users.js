@@ -54,12 +54,18 @@ router.get("/:id", async (req, res) => {
       },
       {
         model: Blog,
-        as: "marked_blogs",
+        as: "readings",
         attributes: {
           exclude: ["userId", "created_at", "updated_at"],
         },
         through: {
           attributes: [],
+        },
+      },
+      {
+        model: ReadingList,
+        attributes: {
+          exclude: ["userId", "blogId", "created_at", "updated_at"],
         },
       },
     ],
