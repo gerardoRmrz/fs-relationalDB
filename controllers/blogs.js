@@ -16,9 +16,6 @@ const blogFinder = async (req, res, next) => {
 router.get("/", async (req, res) => {
   const where = {};
 
-  if (req.query.search) {
-  }
-
   const blogs = await Blog.findAll({
     order: [["likes", "DESC"]],
     attributes: { exclude: ["userId"] },

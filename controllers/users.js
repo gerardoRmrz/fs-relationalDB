@@ -2,6 +2,7 @@ const { SECRET } = require("../util/config");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const router = require("express").Router();
+const { Op } = require("sequelize");
 
 const { User, Blog, ReadingList } = require("../models");
 
@@ -10,12 +11,14 @@ router.get("/", async (req, res) => {
     attributes: {
       exclude: ["passwordHash"],
     },
-    include: {
-      model: Blog,
-      attributes: {
-        exclude: ["userId", "created_at", "updated_at"],
+    include: [
+      {
+        model: Blog,
+        attributes: {
+          exclude: ["userId", "created_at", "updated_at"],
+        },
       },
-    },
+    ],
   });
   res.json(users);
 });
@@ -70,8 +73,24 @@ router.get("/:id", async (req, res) => {
       },
     ],
   });
-  if (user) {
-    res.json(user);
+
+  let result = [];
+
+  if (req.query) {
+    const resultQuery =
+      req.query.read === "true"
+        ? user.readinglists.filter((item) => item.read)
+        : req.query.read === "false"
+          ? user.readinglists.filter((item) => !item.read)
+          : user.readinglists;
+
+    result = { ...user.toJSON(), readinglists: resultQuery };
+  }
+
+  console.log(result);
+
+  if (result) {
+    res.json(result);
   } else {
     res.status(400).end();
   }
