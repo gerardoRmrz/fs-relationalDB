@@ -1,5 +1,5 @@
 const { SECRET } = require("../util/config");
-const { jwt } = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const router = require("express").Router();
 

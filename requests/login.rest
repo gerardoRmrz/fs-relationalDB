@@ -1,7 +1,77 @@
+GET http://localhost:3001/api/login
+
+########### eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImdybXpyc29AZ21haWwuY29tIiwiaWQiOjExLCJpYXQiOjE3ODYzNzAzOTh9.aIyYR5706ZhGAxYMvxh1Ycp-m-hdpuoTv8h5ZFhuBdg ###########
 POST http://localhost:3001/api/login HTTP/1.1
 Content-Type: application/json
 
 {
   "username": "grmzrso@gmail.com",
-  "password":"secret"
+  "password": "secret"
 }
+
+############# eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1hckF6QHlhbmRleC5jb20iLCJpZCI6MiwiaWF0IjoxNzg2MzcxMTM4fQ.bm1z83zLyVtgLUkVsL2VgMyJOR8FZFTXy_CopzOYQdU ###################
+
+POST http://localhost:3001/api/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "username": "marAz@yandex.com",
+  "password": "secret"
+}
+
+############# eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IndpbGxTaGFrQGdtYWlsLmNvbSIsImlkIjozLCJpYXQiOjE3ODYzNzExODd9.5n3W1g59n7atvi7zKuHH-RncNC2YTysRPCyHypKQQk0 ###################
+
+POST http://localhost:3001/api/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "username": "willShak@gmail.com",
+  "password": "secret"
+}
+
+############## eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFraXJLdUBvdXRsb29rLmNvbSIsImlkIjo0LCJpYXQiOjE3ODYzNzEzNzV9.ws5Vwp7xmuFak5bCyvwVfaR3y88jrfAf2UzbwUwF1zk ##################
+
+POST http://localhost:3001/api/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "username": "akirKu@outlook.com",
+  "password": "secret"
+}
+
+############# eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvYkthcEBvdXRsb29rLmNvbSIsImlkIjo1LCJpYXQiOjE3ODYzNzE0NzZ9.3QyyD8FWLtqPE5NXTKd_J-tfXEqUytH3Vqrj0W1awy0  ###################
+
+POST http://localhost:3001/api/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "username": "robKap@outlook.com",
+    "password": "secret"
+  }
+
+############### eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImVtaVphcEB5YWhvby5jb20iLCJpZCI6NiwiaWF0IjoxNzg2MzcxNTI5fQ.yJW0msanra8vJoEpn1LewH3pdpuJzn1pcVX6GrfK3R8 ########################
+POST http://localhost:3001/api/login HTTP/1.1
+Content-Type: application/json
+
+  {
+    "username": "emiZap@yahoo.com",
+    "password": "secret"
+  }
+
+############## eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImdpYktoYWdpQGdtYWlsLmNvbSIsImlkIjo3LCJpYXQiOjE3ODYzNzIyMDZ9.Cio1MRu5CboFU8ubaDm57cQKr0RZ5Pt6C54u93FgehU ###########################
+POST http://localhost:3001/api/login HTTP/1.1
+Content-Type: application/json
+
+  {
+    "username": "gibKhagi@gmail.com",
+    "password": "secret"
+  }
+
+#################
+  POST http://localhost:3001/api/login HTTP/1.1
+Content-Type: application/json
+
+  {
+    "username": "a_camus@gmail.com",
+    "password": "secret"
+  }

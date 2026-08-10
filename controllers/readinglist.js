@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const { User, Blog, ReadingList } = require("../models");
 const { Op } = require("sequelize");
+const tokenExtractor = require("../middlewares/user");
 
 router.post("/", async (req, res) => {
   const { blogId, userId } = req.body;
@@ -34,4 +35,25 @@ router.post("/", async (req, res) => {
   res.json(readingList);
 });
 
+router.put("/:id", tokenExtractor, async (req, res, next) => {
+  try {
+    const { id: userId } = req.decodeToken;
+
+    const user = await User.findByPk(userId, {
+      include: ReadingList,
+    });
+
+    const [readingList] = user.readinglists.filter(
+      (item) => item.dataValues.id === Number(req.params.id),
+    );
+
+    if (!readingList) {
+      throw new Error(" The reading list does not exist ");
+    }
+
+    await readingList.update({ read: true });
+  } catch (error) {
+    next(error);
+  }
+});
 module.exports = router;

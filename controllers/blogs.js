@@ -3,20 +3,7 @@ const jwt = require("jsonwebtoken");
 const { SECRET } = require("../util/config");
 const { Op } = require("sequelize");
 const { User, Blog } = require("../models");
-
-const tokenExtractor = (req, res, next) => {
-  const authorization = req.get("Authorization");
-  if (authorization && authorization.toLowerCase().startsWith("bearer ")) {
-    try {
-      req.decodeToken = jwt.verify(authorization.substring(7), SECRET);
-    } catch {
-      return res.status(401).json({ error: "token invalid" });
-    }
-  } else {
-    return res.status(401).json({ error: "token missing" });
-  }
-  next();
-};
+const tokenExtractor = require("../middlewares/user");
 
 const blogFinder = async (req, res, next) => {
   req.blog = await Blog.findByPk(req.params.id);
@@ -57,6 +44,7 @@ router.get("/:id", blogFinder, async (req, res) => {
 
 router.post("/", tokenExtractor, async (req, res, next) => {
   try {
+    console.log(req.decodedToken);
     const user = await User.findByPk(req.decodeToken.id);
     const currentYear = new Date().getFullYear();
     const isYearValid = req.body.year >= 1991 && req.body.year <= currentYear;

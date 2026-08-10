@@ -3,5 +3,15 @@ Content-Type: application/json
 
 {
   "blogId": 2,
-  "userId": 2
+  "userId": 1
+}
+
+#######################
+
+PUT http://localhost:3001/api/readinglist/1 HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1hckF6QHlhbmRleC5jb20iLCJpZCI6MiwiaWF0IjoxNzg2MzcxMTM4fQ.bm1z83zLyVtgLUkVsL2VgMyJOR8FZFTXy_CopzOYQdU
+
+{
+  "read": true
 }

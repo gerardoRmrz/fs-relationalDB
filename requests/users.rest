@@ -17,7 +17,8 @@ Content-Type: application/json
 
 {
   "name": "Mariano Azuela",
-  "username": "marAz@yandex.com"
+  "username": "marAz@yandex.com",
+  "password": "secret"
 }
 
 ################################
@@ -27,8 +28,8 @@ Content-Type: application/json
 
 {
   "name": "William Shakespeare",
-  "username": "willShak@gmail.com"
-
+  "username": "willShak@gmail.com",
+"password": "secret"
 }
 
 ################################
@@ -38,55 +39,59 @@ Content-Type: application/json
 
 {
   "name": "Akira Kurosawa",
-  "username": "akirKu@outlook.com"
-
+  "username": "akirKu@outlook.com",
+"password": "secret"
 }
 
 ################################
 
-PUT http://localhost:3001/api/users/akirKu%40outlook.com HTTP/1.1
+POST http://localhost:3001/api/users HTTP/1.1
 Content-Type: application/json
 
 {
-  "newUserName": "akrKur@yahoo.com"
+    "name": "Robert Kappa",
+    "username": "robKap@outlook.com",
+    "password": "secret"
+  }
 
-}
-#####################################
-
-POST http://localhost:3001/api/login HTTP/1.1
+#######################################
+POST http://localhost:3001/api/users HTTP/1.1
 Content-Type: application/json
 
-{
-  "username": "akrKur@yahoo.com",
- "password": "secret"
-}
+  {
+    "name": "Emiliano Zapata",
+    "username": "emiZap@yahoo.com",
+    "password": "secret"
+  }
 
-##################################
-
-POST http://localhost:3001/api/login HTTP/1.1
+#########################################
+POST http://localhost:3001/api/users HTTP/1.1
 Content-Type: application/json
 
-{
-  "username": "grmzrso@gmail.com",
-  "password": "secret"
-}
+  {
+    "name": "Gibran Khalil Gibran",
+    "username": "gibKhagi@gmail.com",
+    "password": "secret"
+  }
 
-##################################
+#############################################
 
-POST http://localhost:3001/api/login HTTP/1.1
+#########################################
+POST http://localhost:3001/api/users HTTP/1.1
 Content-Type: application/json
 
-{
-  "username": "marAz@yandex.com",
-  "password": "secret"
-}
+  {
+    "name": "Albert Camus",
+    "username": "a_camus@gmail.com",
+    "password": "secret"
+  }
 
-##################################
-
-POST http://localhost:3001/api/login HTTP/1.1
+#########################################
+POST http://localhost:3001/api/users HTTP/1.1
 Content-Type: application/json
 
-{
-  "username": "willShak@gmail.com",
-  "password": "secret"
-}
+  {
+    "name": "Simone de Beauvoir",
+    "username": "simoneB@gmail.com",
+    "password": "secret"
+  }  
