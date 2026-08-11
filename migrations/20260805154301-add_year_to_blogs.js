@@ -22,7 +22,7 @@ module.exports = {
     });
   },
 
-  down: async (queryInterface, Sequelize) => {
+  down: async ({ context: queryInterface }) => {
     await queryInterface.removeConstraint("blogs", "check_year_range_dynamic");
     await queryInterface.removeColumn("blogs", "year");
   },
