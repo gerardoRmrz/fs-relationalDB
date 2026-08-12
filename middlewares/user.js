@@ -1,14 +1,20 @@
 const { SECRET } = require("../util/config");
 const jwt = require("jsonwebtoken");
+const Session = require("../models/session");
 
-const tokenExtractor = (req, res, next) => {
+const tokenExtractor = async (req, res, next) => {
   const authorization = req.get("Authorization");
-  console.log("========> ", SECRET);
+
   if (authorization && authorization.toLowerCase().startsWith("bearer ")) {
     try {
-      req.decodeToken = jwt.verify(authorization.substring(7), SECRET);
-    } catch {
-      return res.status(401).json({ error: "token invalid" });
+      const token = authorization.substring(7);
+      const { active } = await Session.findOne({ token });
+      if (!active) {
+        throw new Error("Token expired");
+      }
+      req.decodeToken = jwt.verify(token, SECRET);
+    } catch (error) {
+      return res.status(401).json({ error: error.message });
     }
   } else {
     return res.status(401).json({ error: "token missing" });

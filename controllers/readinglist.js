@@ -4,6 +4,7 @@ const { Op } = require("sequelize");
 const tokenExtractor = require("../middlewares/user");
 
 router.post("/", async (req, res) => {
+  console.log("///////////////////>>> ", req.body);
   const { blogId, userId } = req.body;
   const user = await User.findByPk(userId, {
     attributes: {
