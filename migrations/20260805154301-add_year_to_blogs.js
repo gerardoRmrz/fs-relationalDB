@@ -1,10 +1,10 @@
 const { DataTypes, Sequelize } = require("sequelize");
 
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
+  up: async ({ context: queryInterface }) => {
     await queryInterface.addColumn("blogs", "year", {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     });
 
     await queryInterface.addConstraint("blogs", {

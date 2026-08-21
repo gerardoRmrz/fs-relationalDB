@@ -1,20 +1,23 @@
 const Blog = require("./blog");
 const User = require("./user");
 const ReadingList = require("./readinglist");
+const Session = require("./session");
 
+// This assosiation is for users that upload a blog
 User.hasMany(Blog);
 Blog.belongsTo(User);
 
+// Next association is for a reading list. A User can have many blogs in a reading list and a Blog can have many users as readers
 User.belongsToMany(Blog, {
   through: ReadingList,
-  as: "readings",
   foreignKey: "userId",
+  as: "readings",
 });
 
 Blog.belongsToMany(User, {
   through: ReadingList,
-  as: "users_marked",
   foreignKey: "blogId",
+  as: "readers",
 });
 
 ReadingList.belongsTo(User, { foreignKey: "userId" });
@@ -39,4 +42,5 @@ module.exports = {
   Blog,
   User,
   ReadingList,
+  Session,
 };

@@ -8,10 +8,14 @@ const tokenExtractor = async (req, res, next) => {
   if (authorization && authorization.toLowerCase().startsWith("bearer ")) {
     try {
       const token = authorization.substring(7);
-      const { active } = await Session.findOne({ token });
-      if (!active) {
-        throw new Error("Token expired");
+      const session = await Session.findOne({ token });
+
+      console.log("tokenExtractor>>>>>>>>>>> ", JSON.stringify(session));
+
+      if (!session) {
+        return res.sendStatus(401);
       }
+
       req.decodeToken = jwt.verify(token, SECRET);
     } catch (error) {
       return res.status(401).json({ error: error.message });

@@ -20,7 +20,7 @@ module.exports = {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      passwordHash: {
+      password_hash: {
         type: DataTypes.STRING,
       },
       created_at: {
@@ -65,7 +65,7 @@ module.exports = {
     });
   },
   down: async ({ context: queryInterface }) => {
-    await queryInterface.dropTable("blogs");
-    await queryInterface.dropTable("users");
+    await queryInterface.dropTable("blogs", {});
+    await queryInterface.dropTable("users", {});
   },
 };

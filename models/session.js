@@ -7,7 +7,10 @@ Session.init(
   {
     userId: DataTypes.INTEGER,
     token: DataTypes.STRING,
-    active: DataTypes.BOOLEAN,
+    active: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
+    },
   },
   {
     sequelize,

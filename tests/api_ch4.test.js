@@ -1,7 +1,14 @@
 const { describe, it, before, after } = require("node:test");
 const assert = require("node:assert");
 const axios = require("axios");
-const { baseUrl, resetAndSeed, createUser, login } = require("./helper");
+const {
+  baseUrl,
+  resetAndSeed,
+  createUser,
+  login,
+  resetDatabase,
+  logToFile,
+} = require("./helper");
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -30,6 +37,7 @@ before(async () => {
 
   const blogResponse = await axios.post(`${baseUrl}/blogs`, newBlog, {
     headers: { Authorization: `Bearer ${testData.tokens[0]}` },
+    timeout: 3000,
   });
   createdBlogId = blogResponse.data.id;
 });
@@ -144,8 +152,8 @@ describe("Reading Lists API", () => {
     const responseUnread = await axios.get(
       `${baseUrl}/users/${testData.users[0].id}?read=false`,
     );
-    assert.ok([200, 201].includes(responseUnread.status));
 
+    assert.ok([200, 201].includes(responseUnread.status));
     const responseRead = await axios.get(
       `${baseUrl}/users/${testData.users[0].id}?read=true`,
     );
@@ -160,6 +168,7 @@ describe("Reading Lists API", () => {
     const userResponse = await axios.get(
       `${baseUrl}/users/${testData.users[0].id}`,
     );
+
     const readingListId = userResponse.data.readings[0].reading_list.id;
 
     const response = await axios.put(
@@ -167,7 +176,6 @@ describe("Reading Lists API", () => {
       { read: true },
       { headers: { Authorization: `Bearer ${testData.tokens[0]}` } },
     );
-
     assert.ok([200, 201].includes(response.status));
     assert.strictEqual(response.data.read, true);
   });
@@ -192,6 +200,7 @@ describe("Reading Lists API", () => {
     const userResponse = await axios.get(
       `${baseUrl}/users/${testData.users[0].id}`,
     );
+
     const readingListId = userResponse.data.readings[0].reading_list.id;
 
     try {
@@ -248,6 +257,8 @@ describe("Session Management API", () => {
     assert.strictEqual(response.data.username, "session@example.com");
     assert.strictEqual(response.data.name, "Session User");
     sessionToken = response.data.token;
+
+    logToFile("Session Token ==========> " + "\n" + sessionToken);
   });
 
   it("authenticated request works with valid session", async () => {
@@ -266,10 +277,17 @@ describe("Session Management API", () => {
   });
 
   it("logout removes user sessions", async () => {
+    logToFile(
+      "logout removes user sessions======================> " +
+        "\n" +
+        sessionToken,
+    );
+
     const response = await axios.delete(`${baseUrl}/logout`, {
       headers: { Authorization: `Bearer ${sessionToken}` },
     });
 
+    logToFile("LOGOUT test: " + sessionToken);
     assert.strictEqual(response.status, 204);
   });
 
@@ -281,8 +299,15 @@ describe("Session Management API", () => {
     };
 
     try {
+      logToFile(
+        "authenticated request fails after logout ======================> " +
+          "\n" +
+          sessionToken,
+      );
       await axios.post(`${baseUrl}/blogs`, newBlog, {
-        headers: { Authorization: `Bearer ${sessionToken}` },
+        headers: {
+          Authorization: `Bearer ${sessionToken}`,
+        },
       });
       assert.fail("Should have thrown an error");
     } catch (error) {
@@ -446,7 +471,6 @@ describe("Integration: Reading Lists and Sessions", () => {
   });
 
   it("new session allows access to reading list operations again", async () => {
-    await sleep(1100);
     const newToken = await login("test2@example.com", "password456");
 
     const response = await axios.put(

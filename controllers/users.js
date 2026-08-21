@@ -5,6 +5,7 @@ const router = require("express").Router();
 const { Op } = require("sequelize");
 
 const { User, Blog, ReadingList } = require("../models");
+const { decrypt } = require("dotenv");
 
 router.get("/", async (req, res) => {
   const users = await User.findAll({
@@ -44,55 +45,45 @@ router.post("/", async (req, res, next) => {
 });
 
 router.get("/:id", async (req, res) => {
-  const user = await User.findByPk(req.params.id, {
-    attributes: {
-      exclude: ["passwordHash"],
-    },
-    include: [
-      {
-        model: Blog,
-        attributes: {
-          exclude: ["userId", "created_at", "updated_at"],
-        },
+  try {
+    const user = await User.findByPk(req.params.id, {
+      attributes: {
+        exclude: ["passwordHash", "id", "created_at", "updated_at"],
       },
-      {
-        model: Blog,
-        as: "readings",
-        attributes: {
-          exclude: ["userId", "created_at", "updated_at"],
+      include: [
+        {
+          model: Blog,
+          as: "readings",
+          attributes: {
+            exclude: ["userId", "user_id", "created_at", "updated_at"],
+          },
+          through: {
+            as: "reading_list",
+            attributes: {
+              exclude: ["user_id", "blogId", "created_at", "updated_at"],
+            },
+          },
         },
-        through: {
-          attributes: [],
-        },
-      },
-      {
-        model: ReadingList,
-        attributes: {
-          exclude: ["userId", "blogId", "created_at", "updated_at"],
-        },
-      },
-    ],
-  });
+      ],
+    });
 
-  let result = [];
+    if (!user) {
+      return res.status(404).send("User not founded").end();
+    }
 
-  if (req.query) {
-    const resultQuery =
-      req.query.read === "true"
-        ? user.readinglists.filter((item) => item.read)
-        : req.query.read === "false"
-          ? user.readinglists.filter((item) => !item.read)
-          : user.readinglists;
+    let result = user.toJSON();
 
-    result = { ...user.toJSON(), readinglists: resultQuery };
-  }
+    if (req.query.read !== undefined) {
+      const isRead = req.query.read === "true";
+      result.readings = result.readings.filter(
+        (item) => item.reading_list.read === isRead,
+      );
+    }
 
-  console.log(result);
-
-  if (result) {
     res.json(result);
-  } else {
-    res.status(400).end();
+  } catch (error) {
+    console.error("Error in the route: ", error);
+    res.status(500).json({ error: "Internal server error" });
   }
 });
 

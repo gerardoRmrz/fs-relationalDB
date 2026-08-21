@@ -5,15 +5,15 @@ POST http://localhost:3001/api/login HTTP/1.1
 Content-Type: application/json
 
 {
-  "username": "grmzrso@gmail.com",
-  "password": "secret"
+  "username": "session@example.com",
+  "password": "sessionpass"
 }
 
-#eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImdybXpyc29AZ21haWwuY29tIiwiaWQiOjEsImlhdCI6MTc4NjQ5NzQ1Nn0.PypQ734G238UdHqgizVmOM1G1J8NpJc2ztWg6mb0dEo
+#eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNlc3Npb25AZXhhbXBsZS5jb20iLCJpZCI6MywiaWF0IjoxNzg3MjQyNzM3fQ.RooX72XmoMOhphrxzRAzFxap9pnhxU16n-14qyiakV0
 ##################
 DELETE http://localhost:3001/api/logout HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImdybXpyc29AZ21haWwuY29tIiwiaWQiOjEsImlhdCI6MTc4NjQ5NzQzNn0.xXjtzH6KIuVR0FwqWWCmNOsYfIydPYw-hu73fEQKvcU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNlc3Npb25AZXhhbXBsZS5jb20iLCJpZCI6MywiaWF0IjoxNzg3MjQyNzM3fQ.RooX72XmoMOhphrxzRAzFxap9pnhxU16n-14qyiakV0
 
 
 ############# eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1hckF6QHlhbmRleC5jb20iLCJpZCI6MiwiaWF0IjoxNzg2MzcxMTM4fQ.bm1z83zLyVtgLUkVsL2VgMyJOR8FZFTXy_CopzOYQdU ###################

@@ -2,8 +2,9 @@ const router = require("express").Router();
 const jwt = require("jsonwebtoken");
 const { SECRET } = require("../util/config");
 const { Op } = require("sequelize");
-const { User, Blog } = require("../models");
+const { User, Blog, Session } = require("../models");
 const tokenExtractor = require("../middlewares/user");
+const { logToFile } = require("../tests/helper");
 
 const blogFinder = async (req, res, next) => {
   req.blog = await Blog.findByPk(req.params.id);
@@ -42,6 +43,16 @@ router.get("/:id", blogFinder, async (req, res) => {
 router.post("/", tokenExtractor, async (req, res, next) => {
   try {
     const user = await User.findByPk(req.decodeToken.id);
+    const session = await Session.findAll({
+      where: {
+        userId: user.id,
+      },
+    });
+
+    if (session.length === 0) {
+      return res.sendStatus(401);
+    }
+
     const currentYear = new Date().getFullYear();
 
     if (req.body.year) {
@@ -51,8 +62,11 @@ router.post("/", tokenExtractor, async (req, res, next) => {
       }
     }
 
-    const blog = await Blog.create({ ...req.body, user_id: user.id });
-    res.json(blog);
+    const blog = (
+      await Blog.create({ ...req.body, user_id: user.id })
+    ).toJSON();
+
+    res.json({ ...blog, blog_id: blog.id, user_id: blog.userId });
   } catch (error) {
     next(error);
   }

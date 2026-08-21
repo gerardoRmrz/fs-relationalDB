@@ -1,6 +1,5 @@
 const express = require("express");
 const app = express();
-
 const errorHandler = require("./middlewares/errors");
 
 const { PORT } = require("./util/config");
@@ -15,7 +14,6 @@ const readinglistRouter = require("./controllers/readinglist");
 const logoutRouter = require("./controllers/logout");
 
 app.use(express.json());
-
 app.use("/api/reset", resetRouter);
 app.use("/api/blogs", blogsRouter);
 app.use("/api/users", userRouter);

@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "TESTING=true node --test --test-concurrency=1",
+    "test": "TESTING=true node --test --test-concurrency=1 --test-timeout=10000",
+    "test-only": "TESTING=true node --test --test-name-pattern=\"Reading Lists API\" --test-concurrency=1 --test-timeout=10000",
     "start:test": "TESTING=true node index.js",
     "start": "node index.js",
     "dev": "nodemon index.js",
