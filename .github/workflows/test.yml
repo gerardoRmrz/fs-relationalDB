@@ -41,7 +41,7 @@ jobs:
           echo "DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:5432/test_db?sslmode=disable" > .env
           echo "PORT=3001" >> .env
           echo "SECRET=test_secret" >> .env
-          exho "TESTING=true" >> .env
+          echo "TESTING=true" >> .env
           echo "NODE_ENV=test" >> .env
           cat .env  # Verificar contenido      echo
 
