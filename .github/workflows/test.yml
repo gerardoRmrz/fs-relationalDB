@@ -40,7 +40,7 @@ jobs:
         run: |
           echo "PORT: $PORT"
           echo "TEST_DATABASE_URL: $TEST_DATABASE_URL"
-          netstat -tulpn | grep 3001 || echo "Port 3001 not listening"
+          sudo netstat -tulpn | grep 3001 || echo "Port 3001 not listening"
         env:
           PORT: 3001
           TEST_DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/test_db?sslmode=disable
@@ -49,7 +49,12 @@ jobs:
         run: |
           npm start > app.log 2>&1 &
           sleep 5
+          echo "=== Application logs ==="
           cat app.log
+          echo "=== Node processes ==="
+          ps aux | grep node || echo "No node processes found"
+          echo "=== Ports in use ==="
+          sudo netstat -tulpn | grep LISTEN || echo "No listening ports found"
 
         env:
           TEST_DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/test_db?sslmode=disable
