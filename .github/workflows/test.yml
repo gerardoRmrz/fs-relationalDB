@@ -2,9 +2,9 @@ name: API Tests
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [main, master]
   pull_request:
-    branches: [ main, master ]
+    branches: [main, master]
 
 jobs:
   test:
@@ -27,36 +27,67 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '22'
-          
+          node-version: "22"
+
       - name: Install dependencies
         run: npm ci
-        
-      - name: Start application
-        run: npm start > app.log 2>&1 &
+      #########################################
+      - name: Create .env file
+        run: |
+          echo "DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:5432/test_db?sslmode=disable" > .env
+          echo "PORT=3001" >> .env
+          echo "SECRET=test_secret" >> .env
+          echo "TESTING=true" >> .env
+          echo "NODE_ENV=test" >> .env
+          cat .env  # Verificar contenido      echo
+
+      #########################################
+      - name: Debug environment
+        run: |
+          echo "PORT: $PORT"
+          echo "TEST_DATABASE_URL: $TEST_DATABASE_URL"
+          echo "DATABASE_URL: $DATABASE_URL"
+          sudo netstat -tulpn | grep 3001 || echo "Port 3001 not listening"
         env:
-          TEST_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/test_db?sslmode=disable
+          PORT: 3001
+          TEST_DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/test_db?sslmode=disable
+          DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/test_db?sslmode=disable
+      ##############################################
+      - name: Start application
+        run: |
+          npm start > app.log 2>&1 &
+          sleep 5
+          echo "=== Application logs ==="
+          cat app.log
+          echo "=== Node processes ==="
+          ps aux | grep node || echo "No node processes found"
+          echo "=== Ports in use ==="
+          sudo netstat -tulpn | grep LISTEN || echo "No listening ports found"
+
+        env:
+          TEST_DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/test_db?sslmode=disable
           PORT: 3001
           SECRET: test_secret
-          
+          NODE_ENV: test
+
       - name: Wait for application to be ready
-        run: npx wait-on http://localhost:3001 -t 30000
-        
+        run: npx wait-on http://127.0.0.1:3001 -t 60000
+
       - name: Run tests
         run: npm test
         env:
-          TEST_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/test_db?sslmode=disable
+          TEST_DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/test_db?sslmode=disable
           PORT: 3001
           SECRET: test_secret
-      
+
       - name: Print application logs on failure
         if: failure()
         run: cat app.log
-        
+
       - name: Stop application
         if: always()
         run: pkill -f "node index.js" || true

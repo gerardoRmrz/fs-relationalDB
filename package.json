@@ -3,10 +3,13 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "TESTING=true node --test --test-concurrency=1 tests/api_ch3.test.js",
+    "test": "TESTING=true node --test --test-concurrency=1 --test-timeout=10000",
+    "test-only": "TESTING=true node --test --test-name-pattern=\"Reading Lists API\" --test-concurrency=1 --test-timeout=10000",
     "start:test": "TESTING=true node index.js",
     "start": "node index.js",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "migration:down": "node util/rollback.js",
+    "filldatabase:test": "npx sequelize-cli db:seed:all --env=test"
   },
   "author": "grr",
   "license": "ISC",
@@ -18,7 +21,9 @@
     "express": "^5.2.1",
     "jsonwebtoken": "^9.0.3",
     "pg": "^8.22.0",
-    "sequelize": "^6.37.8"
+    "sequelize": "^6.37.8",
+    "umzug": "^3.8.3",
+    "wait-on": "9.1.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.14"
